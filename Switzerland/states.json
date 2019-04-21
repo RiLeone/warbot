@@ -1,0 +1,161 @@
+{
+  "source": "https://it.wikipedia.org/wiki/Cantoni_della_Svizzera",
+  "states": {
+    "uri": {
+      "pop": 35693,
+      "area": 1077,
+      "id": 1,
+      "neighbors": ["ticino", "graubuenden", "glarus", "schwyz", "nidwalden", "obwalden", "bern", "wallis"]
+    },
+    "schwyz": {
+      "pop": 149830,
+      "area": 908,
+      "id": 2,
+      "neighbors": ["uri", "glarus", "sankt_gallen", "zuerich", "zug", "luzern", "nidwalden"]
+    },
+    "obwalden": {
+      "pop": 36115,
+      "area": 491,
+      "id": 3,
+      "neighbors": ["nidwalden", "uri", "bern", "luzern"]
+    },
+    "nidwalden": {
+      "pop": 41584,
+      "area": 276,
+      "id": 4,
+      "neighbors": ["obwalden", "bern", "uri", "schwyz", "luzern"]
+    },
+    "luzern": {
+      "pop": 386082,
+      "area": 1493,
+      "id": 5,
+      "neighbors": ["obwalden", "nidwalden", "schwyz", "zug", "aargau", "bern"]
+    },
+    "zuerich": {
+      "pop": 1406083,
+      "area": 1729,
+      "id": 6,
+      "neighbors": ["aargau", "zug", "schwyz", "sankt_gallen", "thurgau", "schaffausen"]
+    },
+    "glarus": {
+      "pop": 39369,
+      "area": 685,
+      "id": 7,
+      "neighbors": ["sankt_gallen", "schwyz", "uri", "graubuenden"]
+    },
+    "zug": {
+      "pop": 116559,
+      "area": 239,
+      "id": 8,
+      "neighbors": ["schwyz", "zuerich", "aargau", "luzern"]
+    },
+    "bern": {
+      "pop": 992617,
+      "area": 5959,
+      "id": 9,
+      "neighbors": ["nidwalden", "obwalden", "luzern", "aargau", "solothurn", "jura", "neuchatel", "fribourg", "vaud", "wallis"]
+    },
+    "fribourg": {
+      "pop": 291395,
+      "area": 1671,
+      "id": 10,
+      "neighbors": ["vaud", "bern", "neuchatel"]
+    },
+    "solothurn": {
+      "pop": 259836,
+      "area": 791,
+      "id": 11,
+      "neighbors": ["basel_land", "jura", "bern", "aargau"]
+    },
+    "basel_stadt": {
+      "pop": 194090,
+      "area": 37,
+      "id": 12,
+      "neighbors": ["basel_land"]
+    },
+    "basel_land": {
+      "pop": 277973,
+      "area": 518,
+      "id": 13,
+      "neighbors": ["basel_stadt", "solothurn", "jura", "aargau"]
+    },
+    "schaffausen": {
+      "pop": 77955,
+      "area": 298,
+      "id": 14,
+      "neighbors": ["zuerich", "thurgau"]
+    },
+    "appenzell_ausserrhoden": {
+      "pop": 53438,
+      "area": 243,
+      "id": 15,
+      "neighbors": ["sankt_gallen", "appenzell_innerrhoden"]
+    },
+    "appenzell_innerrhoden": {
+      "pop": 15717,
+      "area": 173,
+      "id": 16,
+      "neighbors": ["sankt_gallen", "appenzell_ausserrhoden"]
+    },
+    "sankt_gallen": {
+      "pop": 486981,
+      "area": 2026,
+      "id": 17,
+      "neighbors": ["graubuenden", "appenzell_innerrhoden", "appenzell_ausserrhoden", "thurgau", "zuerich", "schwyz", "glarus"]
+    },
+    "graubuenden": {
+      "pop": 193920,
+      "area": 7105,
+      "id": 18,
+      "neighbors": ["sankt_gallen", "glarus", "uri", "ticino"]
+    },
+    "aargau": {
+      "pop": 627893,
+      "area": 1404,
+      "id": 19,
+      "neighbors": ["zuerich", "basel_land", "solothurn", "bern", "luzern", "zug"]
+    },
+    "thurgau": {
+      "pop": 254528,
+      "area": 991,
+      "id": 20,
+      "neighbors": ["schaffausen", "zuerich", "sankt_gallen"]
+    },
+    "ticino": {
+      "pop": 341652,
+      "area": 2812,
+      "id": 21,
+      "neighbors": ["graubuenden", "uri", "wallis"]
+    },
+    "vaud": {
+      "pop": 734356,
+      "area": 3212,
+      "id": 22,
+      "neighbors": ["geneve", "wallis", "bern", "fribourg", "neuchatel"]
+    },
+    "wallis": {
+      "pop": 321732,
+      "area": 5224,
+      "id": 23,
+      "neighbors": ["ticino", "uri", "bern", "vaud"]
+    },
+    "neuchatel": {
+      "pop": 174554,
+      "area": 803,
+      "id": 24,
+      "neighbors": ["bern", "vaud", "fribourg"]
+    },
+    "geneve": {
+      "pop": 474169,
+      "area": 282,
+      "id": 25,
+      "neighbors": ["vaud"]
+    },
+    "jura": {
+      "pop": 70942,
+      "area": 838,
+      "id": 26,
+      "neighbors": ["solothurn", "basel_land", "bern"]
+    }
+  }
+}
