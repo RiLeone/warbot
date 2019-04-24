@@ -15,7 +15,7 @@ class WarBot:
         self._history = [{"players": self._players_names.copy(),
                           "n_of_players": len(self._players_names)},]
         self._n_of_rounds = 0
-        self._max_rounds = 10
+        self._max_rounds = len(self._players.keys())
 
         self._pop_weight = 0.5
         self._area_weight = 0.1
@@ -27,6 +27,7 @@ class WarBot:
     def compute_round(self):
         battle_pairs = self.get_pairs()
         self.compute_battles(battle_pairs)
+        self._players_names = list(self._players.keys())
         self._n_of_rounds += 1
 
     def get_pairs(self):
@@ -34,7 +35,7 @@ class WarBot:
         available_players = list(self._players.keys())
         busy_players = []
 
-        for ii in range(20):
+        for ii in [1,]: # range(20): # TODO parallel version still bugged (not reaching an end because of wrong neighborhood handling)
             if len(available_players) > 0:
                 idx = np.random.randint(0, len(available_players))
             else:
@@ -87,23 +88,25 @@ class WarBot:
             winners.append(winner)
 
             print("BATLLE INFO :: Battle between {:s} and {:s} was won by {:s}".format(pp[0], pp[1], winner))
+
         for w, l in zip(winners, losers):
             self.merge_players(w, l)
 
-        self._losers += losers
         self.clean_neighborhoods(losers, winners)
+        self._losers += losers
+
 
     def clean_neighborhoods(self, losers, winners):
-        # TODO: We have to remove conquered territories from list of available neighbors,
-        # but also add conquering territory as new neighbor! This somehow not working yet
         for p in self._players.keys():
             for l, w in zip(losers, winners):
-                try:
+                while l in self._players[p]["neighbors"]:
                     self._players[p]["neighbors"].remove(l)
-                    if p != w:
+                    if p != w and not w in self._players[p]["neighbors"]:
                         self._players[p]["neighbors"].append(w)
-                except:
-                    pass
+
+        for p in self._players.keys():
+            self._players[p]["neighbors"] = list(set(self._players[p]["neighbors"]))
+
 
     def merge_players(self, winner, loser):
         for k in self._players[winner].keys():
@@ -111,27 +114,28 @@ class WarBot:
                 self._players[winner][k] += self._players[loser][k]
 
         self._players[winner]["neighbors"] = list(set(self._players[winner]["neighbors"]))
+        while winner in self._players[winner]["neighbors"]:
+            self._players[winner]["neighbors"].remove(winner) # Avoid having oneself as a neighbor
+        while loser in self._players[winner]["neighbors"]:
+            self._players[winner]["neighbors"].remove(loser) # no longer in the game
 
         del self._players[loser]
 
     def run(self):
         counter = 0
-        while self._n_of_rounds < self._max_rounds and len(self._players_names) > 1:
+        while self._n_of_rounds < self._max_rounds and len(self._players.keys()) > 1:
             counter += 1
             print("HISTORY INFO :: Number of remaining states {:d}".format(len(list(self._players.keys()))))
             print("HISTORY INFO :: Round {:d} being computed...".format(counter))
             self.compute_round()
             self._history.append({"players": self._players_names.copy(),
                                   "n_of_players": len(self._players_names)})
+            self.print_players()
 
     def print_players(self):
         print("Surviving regions are:")
         for p in self._players.keys():
             print("\t{:s}: Population {:d}, Area {:d} km2, Neighbors: {}".format(p.capitalize(), self._players[p]["pop"], self._players[p]["area"], self._players[p]["neighbors"]))
-
-
-
-
 
 
 
@@ -142,8 +146,4 @@ if __name__ == "__main__":
 
     data = "../Switzerland/states.json"
     wb = WarBot(data)
-    # pprint.pprint(wb._players)
-    # pprint.pprint(wb._players_names)
-    pprint.pprint(wb.get_pairs())
     wb.run()
-    wb.print_players()
