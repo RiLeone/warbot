@@ -63,13 +63,16 @@ The following images describe more than what thousands of words ever could, how
 a turn goes down.
 
 ![Initial condition](img/initial_condition.png)
+
 The world is (seamingly) at peace.
 
 ![What happens under the hood](img/turn_illustrated.png)
+
 C and G clash! It is a fierce battle determined purely by a pseudorandom number
 generator... While the two fight, the others grow.
 
 ![After the dust has set](img/end_of_turn.png)
+
 The turn is over. C won the battle and thus is now in control of what formerly
 known as G. Who knows if the fierce Gers will revolt in the future? New
 neighbors have been devined for (all) the states. The game can continue - what
