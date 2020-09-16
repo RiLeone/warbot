@@ -5,13 +5,25 @@
       "pop": 10000,
       "area": 2000,
       "id": 1,
-      "neighbors": ["B"]
+      "neighbors": ["B", "C"]
     },
     "B": {
       "pop": 20000,
       "area": 1000,
       "id": 2,
-      "neighbors": ["A"]
+      "neighbors": ["A", "C"]
+    },
+    "C": {
+      "pop": 5000,
+      "area": 1000,
+      "id": 3,
+      "neighbors": ["A", "B", "D"]
+    },
+    "D": {
+      "pop": 40000,
+      "area": 500,
+      "id": 4,
+      "neighbors": ["C"]
     }
   }
 }
