@@ -77,3 +77,13 @@ The turn is over. C won the battle and thus is now in control of what formerly
 known as G. Who knows if the fierce Gers will revolt in the future? New
 neighbors have been devined for (all) the states. The game can continue - what
 will happen next?
+
+
+## Testing
+
+The code is tested using Python's built-in `unittest` module. Each method has to
+be tested before being accepted into the master branch - exceptions apply. For
+exceptions (methods and functions for which a test either cannot be written or
+the employed module is not suitable) it is asked to write a test which gets
+skipped. The rationale behind this is like using `NotImplemented` as a
+placeholder instead of `pass`.

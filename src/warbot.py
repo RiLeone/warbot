@@ -63,7 +63,8 @@ class WarBot:
         loads the JSON file and only returns the "states" entry thereof.
         """
 
-        return json.load(open(data_file, "r"))["states"]
+        with open(data_file, "r") as fp:
+            return json.load(fp)["states"]
 
 
     def compute_round(self):
@@ -170,6 +171,7 @@ class WarBot:
 
     def clean_neighborhoods(self, losers: list, winners: list):
         """Update the world after the battles are over in terms of neighborhoods."""
+
         for p in self._players.keys():
             for l, w in zip(losers, winners):
                 while l in self._players[p]["neighbors"]:
@@ -181,8 +183,9 @@ class WarBot:
             self._players[p]["neighbors"] = list(set(self._players[p]["neighbors"]))
 
 
-    def merge_players(self, winner: list, loser: list):
+    def merge_players(self, winner: str, loser: str):
         """Merge losers into winners for each battle."""
+
         for k in self._players[winner].keys():
             if k != "id":
                 self._players[winner][k] += self._players[loser][k]
@@ -204,6 +207,7 @@ class WarBot:
         until there is either only one state left or the max number of
         iterations has been reached.
         """
+
         counter = 0
         while self._n_of_rounds < self._max_rounds and len(self._players.keys()) > 1:
             counter += 1
