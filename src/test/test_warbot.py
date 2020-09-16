@@ -13,14 +13,14 @@ import unittest as ut
 
 sys.path.append("../")
 
-import warbot
+import WarBot
 
 np.random.seed(0) # Needed in order to get "predictable" results.
 TEST_FILENAME = "test_data.json"
 
-class test_warbot(ut.TestCase):
+class test_WarBot(ut.TestCase):
     def setUp(self):
-        self._wb = warbot.WarBot(TEST_FILENAME)
+        self._wb = WarBot.WarBot(TEST_FILENAME)
 
 
     def test_load_players(self):
