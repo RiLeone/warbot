@@ -22,9 +22,7 @@ def select_world(root: str = ".") -> str:
 
     """
 
-    default = "/".join((root, WORLDS_FOLDER, DEFAULT_WORLD, DEFAULT_FILENAME))
-
-    pname, dnames, fnames = next(os.walk("/".join((root, WORLDS_FOLDER))))
+    dnames = list_worlds(root)
     print("World-selection. Plese select a world, choose from: ")
     for ii, dn in enumerate(dnames):
         try:
@@ -33,12 +31,19 @@ def select_world(root: str = ".") -> str:
         except:
             pass
 
-
     choice = input("\nSelect by name or number (int) [Default: 1. {}]: ".format(
         get_last_part_of_path(dnames[0])
         )
     )
     print()
+
+    return verify_choice(root, dnames, choice)
+
+
+def verify_choice(root: str, dnames: list, choice: str) -> str:
+    """Verify that the choice is valid."""
+
+    default = "/".join((root, WORLDS_FOLDER, DEFAULT_WORLD, DEFAULT_FILENAME))
 
     try:
         idx = int(choice) - 1
@@ -54,6 +59,12 @@ def select_world(root: str = ".") -> str:
     else:
         return default
 
+
+def list_worlds(root: str) -> list:
+    """List the worlds from which one can choose."""
+
+    pname, dnames, fnames = next(os.walk("/".join((root, WORLDS_FOLDER))))
+    return dnames.copy()
 
 
 def get_last_part_of_path(path: str) -> str:

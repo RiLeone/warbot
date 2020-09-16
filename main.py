@@ -9,8 +9,9 @@ import sys
 
 sys.path.append("src/")
 
-import WorldSelector
 import WarBot
+import WorldSelector
+import HistoricStatistician as hs
 
 
 

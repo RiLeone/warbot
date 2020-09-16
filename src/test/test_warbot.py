@@ -16,7 +16,7 @@ sys.path.append("../")
 import WarBot
 
 np.random.seed(0) # Needed in order to get "predictable" results.
-TEST_FILENAME = "test_data.json"
+TEST_FILENAME = "worlds/Testland/states.json"
 
 class test_WarBot(ut.TestCase):
     def setUp(self):
