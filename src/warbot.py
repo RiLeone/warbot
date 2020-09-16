@@ -242,6 +242,6 @@ if __name__ == "__main__":
     print(__doc__)
     print()
 
-    data = "../Switzerland/states.json"
+    data = "../worlds/Switzerland/states.json"
     wb = WarBot(data)
     wb.run()
