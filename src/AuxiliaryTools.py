@@ -9,6 +9,7 @@
 """
 
 import sys
+import copy
 import logging
 
 
@@ -36,7 +37,7 @@ def setup_logging(file__name__: str, local_level: int = logging.INFO) -> "logger
 def parse_args() -> dict:
     """Parse command-line arguments for detection options."""
 
-    options = DEFAULT_MAIN_OPTS
+    options = copy.deepcopy(DEFAULT_MAIN_OPTS)
 
     VALID_OPTIONS = ("-v", )
     if len(sys.argv) > 1:
