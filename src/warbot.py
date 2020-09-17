@@ -8,9 +8,14 @@
 
 import json
 import pprint
+import logging
 import numpy as np
 import matplotlib.pyplot as pltlib
 
+import AuxiliaryTools
+
+
+logger = AuxiliaryTools.setup_logging(__name__, local_level = logging.INFO)
 
 
 class WarBot:
@@ -160,7 +165,7 @@ class WarBot:
             losers.append(loser)
             winners.append(winner)
 
-            print("BATLLE INFO :: Battle between {:s} and {:s} was won by {:s}".format(pp[0], pp[1], winner))
+            logger.info("BATLLE INFO :: Battle between {:s} and {:s} was won by {:s}".format(pp[0], pp[1], winner))
 
         for w, l in zip(winners, losers):
             self.merge_players(w, l)
@@ -200,7 +205,7 @@ class WarBot:
         del self._players[loser]
 
 
-    def run(self):
+    def run(self, verbose: bool = False):
         """Run a game.
 
         This is the one method to call them all. It simulates the full game
@@ -208,11 +213,16 @@ class WarBot:
         iterations has been reached.
         """
 
+        print_command = logger.warning
+
+        if verbose:
+            print_command = print
+
         counter = 0
         while self._n_of_rounds < self._max_rounds and len(self._players.keys()) > 1:
             counter += 1
-            print("HISTORY INFO :: Number of remaining states {:d}".format(len(list(self._players.keys()))))
-            print("HISTORY INFO :: Round {:d} being computed...".format(counter))
+            print_command("HISTORY INFO :: Number of remaining states {:d}".format(len(list(self._players.keys()))))
+            print_command("HISTORY INFO :: Round {:d} being computed...".format(counter))
             self.compute_round()
             self._history.append(
                 {
@@ -225,6 +235,7 @@ class WarBot:
 
     def print_players(self):
         """Auxilizry method for (pretty) printing the remaining states."""
+
         print("Surviving regions are:")
         for p in self._players.keys():
             print("\t{:s}: Population {:d}, Area {:d} km2, Neighbors: {}".format(
@@ -244,4 +255,4 @@ if __name__ == "__main__":
 
     data = "../worlds/Switzerland/states.json"
     wb = WarBot(data)
-    wb.run()
+    wb.run(verbose = False)
