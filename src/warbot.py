@@ -18,6 +18,7 @@ import AuxiliaryTools
 logger = AuxiliaryTools.setup_logging(__name__, local_level = logging.INFO)
 
 
+
 class WarBot:
     """WarBot Object
 
