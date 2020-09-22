@@ -8,6 +8,7 @@
 """
 
 import sys
+import copy
 import numpy as np
 import unittest as ut
 
@@ -17,6 +18,20 @@ import WarBot
 
 np.random.seed(0) # Needed in order to get "predictable" results.
 TEST_FILENAME = "worlds/Testland/states.json"
+TEST_PLAYERS = {
+    "A": {
+        "pop": 10000,
+        "area": 2000,
+        "id": 1,
+        "neighbors": ["B"]
+    },
+    "B": {
+        "pop": 20000,
+        "area": 1000,
+        "id": 2,
+        "neighbors": ["A"]
+    }
+}
 
 class test_WarBot(ut.TestCase):
     def setUp(self):
@@ -27,20 +42,7 @@ class test_WarBot(ut.TestCase):
         """Test load_players() method"""
 
         cr = self._wb.load_players(TEST_FILENAME) # In a way redundant, but this is what we actually wanna test here.
-        er = {
-            "A": {
-                "pop": 10000,
-                "area": 2000,
-                "id": 1,
-                "neighbors": ["B"]
-            },
-            "B": {
-                "pop": 20000,
-                "area": 1000,
-                "id": 2,
-                "neighbors": ["A"]
-            }
-        }
+        er = copy.deepcopy(TEST_PLAYERS)
 
         self.assertEqual(cr, er)
 
@@ -107,3 +109,64 @@ class test_WarBot(ut.TestCase):
         """Test print_players() method: SKIP as non-functional."""
 
         pass
+
+
+    def test_compute_battle_strengths(self):
+        """Test compute_battle_strengths() staticmethod"""
+
+        subtests = []
+        battle_pair = [
+            {"pop": 10, "area": 10.},
+            {"pop": 10, "area": 10.}
+        ]
+
+        subtests.append(
+            {
+                "arg": battle_pair,
+                "kwargs": {"method": "poparea"},
+                "er": [0.5, 0.5],
+                "msg": "Basic usage with 'poparea'"
+            }
+        )
+
+        subtests.append(
+            {
+                "arg": battle_pair,
+                "kwargs": {"method": "qwertzuiop"},
+                "er": [0.5, 0.5],
+                "msg": "Invalid method"
+            }
+        )
+
+        for ii, sbt in enumerate(subtests):
+            with self.subTest(i = ii, msg = sbt["msg"]):
+                cr = self._wb.compute_battle_strengths(sbt["arg"], **sbt["kwargs"])
+                self.assertAlmostEqual(sbt["er"], cr, places = 4)
+
+
+    def test_update_populations_after_battle(self):
+        """Test post-battle population update"""
+
+        self._wb._players = copy.deepcopy(TEST_PLAYERS)
+        player_keys = ["A", "B"]
+        pop_losses = [100, 200]
+        ers = [TEST_PLAYERS[pk]["pop"] - pl for pk, pl in zip(player_keys, pop_losses)]
+
+        self._wb.update_populations_after_battle(player_keys, pop_losses)
+
+        for pk, er in zip(player_keys, ers):
+            self.assertEqual(self._wb._players[pk]["pop"], er)
+
+
+    def test_compute_fatalities(self):
+        """Test compute_fatalities() staticmethod"""
+
+        # TODO This test needs to be extended as it does not cover all cases yet
+        pop = 1000
+        rs = 0.5
+        bo = 0.5
+
+        er = pop // 2
+        cr = self._wb.compute_fatalities(pop, rs, bo)
+
+        self.assertEqual(er, cr)
