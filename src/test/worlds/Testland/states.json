@@ -1,0 +1,17 @@
+{
+  "source": "out of my head",
+  "states": {
+    "A": {
+      "pop": 10000,
+      "area": 2000,
+      "id": 1,
+      "neighbors": ["B"]
+    },
+    "B": {
+      "pop": 20000,
+      "area": 1000,
+      "id": 2,
+      "neighbors": ["A"]
+    }
+  }
+}
