@@ -319,10 +319,6 @@ if __name__ == "__main__":
     print(__doc__)
     print()
 
-<<<<<<< HEAD:src/warbot.py
-    data = "../Switzerland/states_test.json"
-=======
     data = "../worlds/Switzerland/states.json"
->>>>>>> master:src/WarBot.py
     wb = WarBot(data)
     wb.run(verbose = False)
