@@ -1,0 +1,35 @@
+{
+  "source": "SGE_test_Data",
+  "states": {
+    "State_1": {
+      "pop": 1000,
+      "area": 1000,
+      "id": 1,
+      "neighbors": ["State_2", "State_3", "State_4", "State_5"]
+    },
+    "State_2": {
+      "pop": 2000,
+      "area": 500,
+      "id": 2,
+      "neighbors": ["State_1", "State_5"]
+    },
+    "State_3": {
+      "pop": 500,
+      "area": 1500,
+      "id": 3,
+      "neighbors": ["State_1","State_4"]
+    },
+    "State_4": {
+      "pop": 100,
+      "area": 3500,
+      "id": 4,
+      "neighbors": ["State_1","State_3","State_5"]
+    },
+    "State_5": {
+      "pop": 500,
+      "area": 500,
+      "id": 5,
+      "neighbors": ["State_1","State_2","State_4"]
+    }
+  }
+}
