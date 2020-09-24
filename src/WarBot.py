@@ -6,6 +6,7 @@
 
 """
 
+import copy
 import json
 import pprint
 import logging
@@ -68,7 +69,7 @@ class WarBot:
         """
 
         with open(data_file, "r") as fp:
-            return json.load(fp)["states"]
+            return copy.deepcopy(json.load(fp)["states"])
 
 
     def compute_round(self):
@@ -139,7 +140,9 @@ class WarBot:
     def compute_battles(self, battle_pairs: list):
         """Compute the outcome of all battles specified by the battle_pairs.
 
-        One way of getting battle pairs is to call the get_pairs() method.
+        One way of getting battle pairs is to call the get_pairs() method. All
+        states NOT involved in battles grow in population according to their
+        growth-rate.
         """
 
         winners = []
@@ -175,6 +178,9 @@ class WarBot:
         self.clean_neighborhoods(losers, winners)
         self._losers += losers
 
+        battling_states = winners + losers
+        self.update_populations_of_non_battling_states(battling_states)
+
 
     def update_populations_after_battle(self, players_keys: list, pop_losses: list):
         """Update the population values after the battle"""
@@ -182,6 +188,16 @@ class WarBot:
         for pk, pl in zip(players_keys, pop_losses):
             self._players[pk]["pop"] -= pl
             self._players[pk]["pop"] = max([1, self._players[pk]["pop"]]) # avoid populations <= 1
+
+
+    def update_populations_of_non_battling_states(self, battling_states: list):
+        """Update populations of non battling states."""
+
+        for sn, pp in self._players.items():
+            if not sn in battling_states:
+                delta_p = self.compute_population_growth_delta(pp["pop"], pp["growth_rate"])
+                pp["pop"] += delta_p
+                pp["pop"] = max(pp["pop"], 1) # Avoid negatie populations, growth_rate can be negative!
 
 
     def clean_neighborhoods(self, losers: list, winners: list):
@@ -202,7 +218,7 @@ class WarBot:
         """Merge losers into winners for each battle."""
 
         for k in self._players[winner].keys():
-            if k != "id":
+            if not k in ("id", "growth_rate"):
                 self._players[winner][k] += self._players[loser][k]
 
         self._players[winner]["neighbors"] = list(set(self._players[winner]["neighbors"]))
@@ -244,7 +260,7 @@ class WarBot:
 
 
     def print_players(self):
-        """Auxilizry method for (pretty) printing the remaining states."""
+        """Auxiliary method for (pretty) printing the remaining states."""
 
         tot_pop = 0
         print("Surviving regions are:")
@@ -312,6 +328,16 @@ class WarBot:
         )
 
 
+    @staticmethod
+    def compute_population_growth_delta(pop: int, growth_rate: float) -> int:
+        """Compute population growth based on state's growth-rate
+
+        This function computes a population difference, the return value needs
+        to be added to the previous population to get the updated value.
+        """
+
+        return int(round(pop * growth_rate, 0))
+
 
 
 if __name__ == "__main__":
@@ -319,6 +345,6 @@ if __name__ == "__main__":
     print(__doc__)
     print()
 
-    data = "../worlds/Switzerland/states.json"
+    data = "../worlds/Debugland/states.json"
     wb = WarBot(data)
     wb.run(verbose = False)

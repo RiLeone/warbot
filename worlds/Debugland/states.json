@@ -5,25 +5,29 @@
       "pop": 10000,
       "area": 2000,
       "id": 1,
-      "neighbors": ["B", "C"]
+      "neighbors": ["B", "C"],
+      "growth_rate": 0.01
     },
     "B": {
       "pop": 20000,
       "area": 1000,
       "id": 2,
-      "neighbors": ["A", "C"]
+      "neighbors": ["A", "C"],
+      "growth_rate": -0.005
     },
     "C": {
       "pop": 5000,
       "area": 1000,
       "id": 3,
-      "neighbors": ["A", "B", "D"]
+      "neighbors": ["A", "B", "D"],
+      "growth_rate": 0.05
     },
     "D": {
       "pop": 40000,
       "area": 500,
       "id": 4,
-      "neighbors": ["C"]
+      "neighbors": ["C"],
+      "growth_rate": 0.02
     }
   }
 }

@@ -5,157 +5,183 @@
       "pop": 35693,
       "area": 1077,
       "id": 1,
-      "neighbors": ["ticino", "graubuenden", "glarus", "schwyz", "nidwalden", "obwalden", "bern", "wallis"]
+      "neighbors": ["ticino", "graubuenden", "glarus", "schwyz", "nidwalden", "obwalden", "bern", "wallis"],
+      "growth_rate": 0.05
     },
     "schwyz": {
       "pop": 149830,
       "area": 908,
       "id": 2,
-      "neighbors": ["uri", "glarus", "sankt_gallen", "zuerich", "zug", "luzern", "nidwalden"]
+      "neighbors": ["uri", "glarus", "sankt_gallen", "zuerich", "zug", "luzern", "nidwalden"],
+      "growth_rate": 0.02
     },
     "obwalden": {
       "pop": 36115,
       "area": 491,
       "id": 3,
-      "neighbors": ["nidwalden", "uri", "bern", "luzern"]
+      "neighbors": ["nidwalden", "uri", "bern", "luzern"],
+      "growth_rate": 0.01
     },
     "nidwalden": {
       "pop": 41584,
       "area": 276,
       "id": 4,
-      "neighbors": ["obwalden", "bern", "uri", "schwyz", "luzern"]
+      "neighbors": ["obwalden", "bern", "uri", "schwyz", "luzern"],
+      "growth_rate": -0.01
     },
     "luzern": {
       "pop": 386082,
       "area": 1493,
       "id": 5,
-      "neighbors": ["obwalden", "nidwalden", "schwyz", "zug", "aargau", "bern"]
+      "neighbors": ["obwalden", "nidwalden", "schwyz", "zug", "aargau", "bern"],
+      "growth_rate": -0.025
     },
     "zuerich": {
       "pop": 1406083,
       "area": 1729,
       "id": 6,
-      "neighbors": ["aargau", "zug", "schwyz", "sankt_gallen", "thurgau", "schaffausen"]
+      "neighbors": ["aargau", "zug", "schwyz", "sankt_gallen", "thurgau", "schaffausen"],
+      "growth_rate": 0.005
     },
     "glarus": {
       "pop": 39369,
       "area": 685,
       "id": 7,
-      "neighbors": ["sankt_gallen", "schwyz", "uri", "graubuenden"]
+      "neighbors": ["sankt_gallen", "schwyz", "uri", "graubuenden"],
+      "growth_rate": 0.07
     },
     "zug": {
       "pop": 116559,
       "area": 239,
       "id": 8,
-      "neighbors": ["schwyz", "zuerich", "aargau", "luzern"]
+      "neighbors": ["schwyz", "zuerich", "aargau", "luzern"],
+      "growth_rate": 0.01
     },
     "bern": {
       "pop": 992617,
       "area": 5959,
       "id": 9,
-      "neighbors": ["nidwalden", "obwalden", "luzern", "aargau", "solothurn", "jura", "neuchatel", "fribourg", "vaud", "wallis"]
+      "neighbors": ["nidwalden", "obwalden", "luzern", "aargau", "solothurn", "jura", "neuchatel", "fribourg", "vaud", "wallis"],
+      "growth_rate": -0.03
     },
     "fribourg": {
       "pop": 291395,
       "area": 1671,
       "id": 10,
-      "neighbors": ["vaud", "bern", "neuchatel"]
+      "neighbors": ["vaud", "bern", "neuchatel"],
+      "growth_rate": 0.01
     },
     "solothurn": {
       "pop": 259836,
       "area": 791,
       "id": 11,
-      "neighbors": ["basel_land", "jura", "bern", "aargau"]
+      "neighbors": ["basel_land", "jura", "bern", "aargau"],
+      "growth_rate": -0.02
     },
     "basel_stadt": {
       "pop": 194090,
       "area": 37,
       "id": 12,
-      "neighbors": ["basel_land"]
+      "neighbors": ["basel_land"],
+      "growth_rate": 0.07
     },
     "basel_land": {
       "pop": 277973,
       "area": 518,
       "id": 13,
-      "neighbors": ["basel_stadt", "solothurn", "jura", "aargau"]
+      "neighbors": ["basel_stadt", "solothurn", "jura", "aargau"],
+      "growth_rate": 0.01
     },
     "schaffausen": {
       "pop": 77955,
       "area": 298,
       "id": 14,
-      "neighbors": ["zuerich", "thurgau"]
+      "neighbors": ["zuerich", "thurgau"],
+      "growth_rate": 0.0
     },
     "appenzell_ausserrhoden": {
       "pop": 53438,
       "area": 243,
       "id": 15,
-      "neighbors": ["sankt_gallen", "appenzell_innerrhoden"]
+      "neighbors": ["sankt_gallen", "appenzell_innerrhoden"],
+      "growth_rate": 0.035
     },
     "appenzell_innerrhoden": {
       "pop": 15717,
       "area": 173,
       "id": 16,
-      "neighbors": ["sankt_gallen", "appenzell_ausserrhoden"]
+      "neighbors": ["sankt_gallen", "appenzell_ausserrhoden"],
+      "growth_rate": -0.035
     },
     "sankt_gallen": {
       "pop": 486981,
       "area": 2026,
       "id": 17,
-      "neighbors": ["graubuenden", "appenzell_innerrhoden", "appenzell_ausserrhoden", "thurgau", "zuerich", "schwyz", "glarus"]
+      "neighbors": ["graubuenden", "appenzell_innerrhoden", "appenzell_ausserrhoden", "thurgau", "zuerich", "schwyz", "glarus"],
+      "growth_rate": 0.01
     },
     "graubuenden": {
       "pop": 193920,
       "area": 7105,
       "id": 18,
-      "neighbors": ["sankt_gallen", "glarus", "uri", "ticino"]
+      "neighbors": ["sankt_gallen", "glarus", "uri", "ticino"],
+      "growth_rate": 0.03
     },
     "aargau": {
       "pop": 627893,
       "area": 1404,
       "id": 19,
-      "neighbors": ["zuerich", "basel_land", "solothurn", "bern", "luzern", "zug"]
+      "neighbors": ["zuerich", "basel_land", "solothurn", "bern", "luzern", "zug"],
+      "growth_rate": 0.02
     },
     "thurgau": {
       "pop": 254528,
       "area": 991,
       "id": 20,
-      "neighbors": ["schaffausen", "zuerich", "sankt_gallen"]
+      "neighbors": ["schaffausen", "zuerich", "sankt_gallen"],
+      "growth_rate": 0.01
     },
     "ticino": {
       "pop": 341652,
       "area": 2812,
       "id": 21,
-      "neighbors": ["graubuenden", "uri", "wallis"]
+      "neighbors": ["graubuenden", "uri", "wallis"],
+      "growth_rate": 0.03
     },
     "vaud": {
       "pop": 734356,
       "area": 3212,
       "id": 22,
-      "neighbors": ["geneve", "wallis", "bern", "fribourg", "neuchatel"]
+      "neighbors": ["geneve", "wallis", "bern", "fribourg", "neuchatel"],
+      "growth_rate": 0.05
     },
     "wallis": {
       "pop": 321732,
       "area": 5224,
       "id": 23,
-      "neighbors": ["ticino", "uri", "bern", "vaud"]
+      "neighbors": ["ticino", "uri", "bern", "vaud"],
+      "growth_rate": -0.02
     },
     "neuchatel": {
       "pop": 174554,
       "area": 803,
       "id": 24,
-      "neighbors": ["bern", "vaud", "fribourg"]
+      "neighbors": ["bern", "vaud", "fribourg"],
+      "growth_rate": 0.01
     },
     "geneve": {
       "pop": 474169,
       "area": 282,
       "id": 25,
-      "neighbors": ["vaud"]
+      "neighbors": ["vaud"],
+      "growth_rate": -0.01
     },
     "jura": {
       "pop": 70942,
       "area": 838,
       "id": 26,
-      "neighbors": ["solothurn", "basel_land", "bern"]
+      "neighbors": ["solothurn", "basel_land", "bern"],
+      "growth_rate": 0.01
     }
   }
 }
