@@ -69,14 +69,15 @@ This JSON file needs to define the states of that world as follows:
       "pop": <int>,
       "area": <float>,
       "id": <int> unique,
-      "neighbors": list[str]
+      "neighbors": <list[str]>,
+      "growth_rate": <float>
     }
   }
 }
 ```
 The JSON file can contain also other items, but it does not have to. Check
 `<PRJ_ROOT>/worlds/Debugland/states.json` for a comprehensive and up-to-date
-example. This file is the bare minumum - in terms of structure - required for
+example. This file is the bare minimum - in terms of structure - required for
 the game to work.
 
 

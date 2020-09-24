@@ -11,6 +11,7 @@ import sys
 import copy
 import numpy as np
 import unittest as ut
+import UnittestExtensions as ute
 
 sys.path.append("../")
 
@@ -23,13 +24,15 @@ TEST_PLAYERS = {
         "pop": 10000,
         "area": 2000,
         "id": 1,
-        "neighbors": ["B"]
+        "neighbors": ["B"],
+        "growth_rate": 0.01,
     },
     "B": {
         "pop": 20000,
         "area": 1000,
         "id": 2,
-        "neighbors": ["A"]
+        "neighbors": ["A"],
+        "growth_rate": -0.01,
     }
 }
 
@@ -44,7 +47,7 @@ class test_WarBot(ut.TestCase):
         cr = self._wb.load_players(TEST_FILENAME) # In a way redundant, but this is what we actually wanna test here.
         er = copy.deepcopy(TEST_PLAYERS)
 
-        self.assertEqual(cr, er)
+        self.assertAlmostEqual(cr, er)
 
 
     def test_compute_round(self):
@@ -93,7 +96,10 @@ class test_WarBot(ut.TestCase):
         winner = "B"
 
         self._wb.merge_players(winner, loser)
-        er = {'B': {'pop': 30000, 'area': 3000, 'id': 2, 'neighbors': []}}
+        er = {winner: copy.deepcopy(TEST_PLAYERS[winner])}
+        _ = er[winner]["neighbors"].pop(0)
+        er[winner]["pop"] += TEST_PLAYERS[loser]["pop"]
+        er[winner]["area"] += TEST_PLAYERS[loser]["area"]
         self.assertEqual(er, self._wb._players)
 
 
@@ -169,4 +175,29 @@ class test_WarBot(ut.TestCase):
         er = pop // 2
         cr = self._wb.compute_fatalities(pop, rs, bo)
 
+        self.assertEqual(er, cr)
+
+
+    def test_compute_population_growth_delta(self):
+        """Test compute_population_growth_delta()"""
+
+        growth_rate = 0.1
+        pop = 100
+        er = 10
+        cr = self._wb.compute_population_growth_delta(pop, growth_rate)
+        self.assertEqual(er, cr)
+
+
+    def test_update_populations_of_non_battling_states(self):
+        """Test update_populations_of_non_battling_states()"""
+
+        battling_states = ["A"]
+        self._wb.update_populations_of_non_battling_states(battling_states)
+
+        cr = self._wb._players["A"]["pop"]
+        er = TEST_PLAYERS["A"]["pop"]
+        self.assertEqual(er, cr)
+
+        cr = self._wb._players["B"]["pop"]
+        er = int(round(TEST_PLAYERS["B"]["pop"] * (1 + TEST_PLAYERS["B"]["growth_rate"])))
         self.assertEqual(er, cr)
