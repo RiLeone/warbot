@@ -117,6 +117,30 @@ class test_WarBot(ut.TestCase):
         pass
 
 
+    def test_compute_world_population(self):
+        """Test compute_world_population() method"""
+
+        er = sum([tp["pop"] for tp in TEST_PLAYERS.values()])
+        cr = self._wb.compute_world_population()
+
+        self.assertEqual(er, cr)
+
+
+    @ut.skip("OK")
+    def test_get_history(self):
+        """Test get_history() method: SKIP"""
+
+        pass
+
+
+    def test_update_history(self):
+        """Test update_history method: SKIP - NotImplemented yet. Need to find
+        suitable test cases."""
+
+        # TODO: implement suitable test-cases
+        NotImplemented
+
+
     def test_compute_battle_strengths(self):
         """Test compute_battle_strengths() staticmethod"""
 

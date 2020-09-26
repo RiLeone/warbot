@@ -11,13 +11,14 @@ import json
 import pprint
 import logging
 import numpy as np
+from datetime import datetime
 import matplotlib.pyplot as pltlib
 
 import AuxiliaryTools
 
 
 logger = AuxiliaryTools.setup_logging(__name__, local_level = logging.INFO)
-
+YEAR = datetime.now().year
 
 
 class WarBot:
@@ -53,8 +54,21 @@ class WarBot:
     def __init__(self, data_file: str) -> "WarBot Object":
         self._players = self.load_players(data_file)
         self._players_names = [pn.replace("_", " ").capitalize() for pn in self._players.keys()]
-        self._history = [{"players": self._players_names.copy(),
-                          "n_of_players": len(self._players_names)},]
+        self._world_population = self.compute_world_population()
+        self._year = YEAR
+        self._n_battles = 0
+        self._global_fatalities = 0
+        self._global_pop_increase = 0
+
+        self._history = {
+            "year": [YEAR, ],
+            "states": [self._players_names.copy(), ],
+            "n_of_states": [len(self._players_names), ],
+            "world_population": [self._world_population, ],
+            "n_of_battles": [0, ],
+            "n_of_fatalities": [0, ],
+            "n_of_pop_increse": [0, ],
+        }
         self._n_of_rounds = 0
         self._max_rounds = len(self._players.keys())
 
@@ -145,6 +159,7 @@ class WarBot:
         growth-rate.
         """
 
+        fatalities = 0
         winners = []
         losers = []
         for pp in battle_pairs:
@@ -165,6 +180,8 @@ class WarBot:
 
             pop_losses = [self.compute_fatalities(self._players[p]["pop"], rs, result) for p, rs in zip(pp, strengths)]
             self.update_populations_after_battle(pp, pop_losses)
+            for pl in pop_losses:
+                fatalities += pl
 
             losers.append(loser)
             winners.append(winner)
@@ -181,6 +198,9 @@ class WarBot:
         battling_states = winners + losers
         self.update_populations_of_non_battling_states(battling_states)
 
+        self._global_fatalities = fatalities
+        self._n_battles = len(battle_pairs)
+
 
     def update_populations_after_battle(self, players_keys: list, pop_losses: list):
         """Update the population values after the battle"""
@@ -193,11 +213,15 @@ class WarBot:
     def update_populations_of_non_battling_states(self, battling_states: list):
         """Update populations of non battling states."""
 
+        global_increase = 0
         for sn, pp in self._players.items():
             if not sn in battling_states:
                 delta_p = self.compute_population_growth_delta(pp["pop"], pp["growth_rate"])
                 pp["pop"] += delta_p
+                global_increase += delta_p
                 pp["pop"] = max(pp["pop"], 1) # Avoid negatie populations, growth_rate can be negative!
+
+        self._global_pop_increase = global_increase
 
 
     def clean_neighborhoods(self, losers: list, winners: list):
@@ -245,36 +269,57 @@ class WarBot:
             print_command = print
 
         counter = 0
-        while self._n_of_rounds < self._max_rounds and len(self._players.keys()) > 1:
-            counter += 1
+        while self._n_of_rounds < self._max_rounds and len(self._players_names) > 1:
             print_command("HISTORY INFO :: Number of remaining states {:d}".format(len(list(self._players.keys()))))
             print_command("HISTORY INFO :: Round {:d} being computed...".format(counter))
+            counter += 1
+            self._year += 1
             self.compute_round()
-            self._history.append(
-                {
-                    "players": self._players_names.copy(),
-                    "n_of_players": len(self._players_names)
-                }
-            )
+            self._world_population = self.compute_world_population()
+
+            self.update_history()
             self.print_players()
+
+
+    def update_history(self):
+        """Update history by appending latest values"""
+
+        self._history["year"].append(self._year)
+        self._history["states"].append(self._players_names.copy())
+        self._history["n_of_states"].append(len(self._players_names))
+        self._history["world_population"].append(self._world_population)
+        self._history["n_of_battles"].append(self._n_battles)
+        self._history["n_of_fatalities"].append(self._global_fatalities)
+        self._history["n_of_pop_increse"].append(self._global_pop_increase)
+
+
+    def get_history(self):
+        """Get history safely"""
+
+        return copy.deepcopy(self._history)
 
 
     def print_players(self):
         """Auxiliary method for (pretty) printing the remaining states."""
 
-        tot_pop = 0
-        print("Surviving regions are:")
-        for p in self._players.keys():
+        print("* Year {:d}, Surviving states are:".format(self._year))
+        for state_name, state_props in self._players.items():
             print("\t{:s}: Population {:d}, Area {:d} km2, Neighbors: {}".format(
-                p.capitalize(),
-                self._players[p]["pop"],
-                self._players[p]["area"],
-                self._players[p]["neighbors"]
+                state_name.capitalize(),
+                state_props["pop"],
+                state_props["area"],
+                state_props["neighbors"]
                 )
             )
-            tot_pop += self._players[p]["pop"]
 
-        print("\tTotal World Population: {:d}".format(tot_pop))
+        print()
+        print("\tTotal World Population: {:d}\n".format(self._world_population))
+
+
+    def compute_world_population(self) -> int:
+        """Compute world population."""
+
+        return sum([st["pop"] for st in self._players.values()])
 
 
     @staticmethod
@@ -348,3 +393,6 @@ if __name__ == "__main__":
     data = "../worlds/Debugland/states.json"
     wb = WarBot(data)
     wb.run(verbose = False)
+
+    hist = wb.get_history()
+    print(hist)
