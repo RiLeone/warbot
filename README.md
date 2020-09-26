@@ -166,3 +166,12 @@ The turn is over. C won the battle and thus is now in control of what formerly
 known as G. Who knows if the fierce Gers will revolt in the future? New
 neighbors have been devined for (all) the states. The game can continue - what
 will happen next?
+
+
+## History Statistics and Visualization
+
+The history of any game is analyzed by the `HistoryStatistician` module. More is
+yet to come.
+
+![Example Historic World Populaiton Visualization](img/example_wph.png)
+Example history world population visualization.
