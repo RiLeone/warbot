@@ -153,7 +153,7 @@ a turn goes down.
 
 ![Initial condition](img/initial_condition.png)
 
-The world is (seamingly) at peace.
+The world is (seemingly) at peace.
 
 ![What happens under the hood](img/turn_illustrated.png)
 
@@ -164,7 +164,7 @@ generator... While the two fight, the others grow.
 
 The turn is over. C won the battle and thus is now in control of what formerly
 known as G. Who knows if the fierce Gers will revolt in the future? New
-neighbors have been devined for (all) the states. The game can continue - what
+neighbors have been defined for (all) the states. The game can continue - what
 will happen next?
 
 
