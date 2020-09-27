@@ -15,6 +15,7 @@ import WorldSelector
 import AuxiliaryTools
 import HistoricStatistician as hs
 
+
 def main():
     """Run the full game."""
 
@@ -28,6 +29,7 @@ def main():
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def home():
     text = "Hello! welcome to warbot"
@@ -35,23 +37,14 @@ def home():
     return render_template('home.html', text=text, bold_text=bold_text)
 
 
-
-@app.route("/warbot_text", methods=["POST", "GET"])
-def warbot_text():
+@app.route("/play", methods=["POST", "GET"])
+def play():
     if request.method == "POST":
         world = request.form["world"]
         old_stdout = sys.stdout
         sys.stdout = mystdout = StringIO()
         main()
         sys.stdout = old_stdout
-        return render_template('warbot_game.html', textt=mystdout.getvalue())
+        return render_template('warbot_game.html', text=mystdout.getvalue())
     else:
-        textt = "no_text"
         return render_template('warbot_game.html')
-
-
-@app.route("/warbot_svg")
-def warbot_svg():
-    text = "Hello! welcome to warbot"
-    bold_text = "Whup Whup!"
-    return render_template('home.html', text=text, bold_text=bold_text)
