@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+	{% include "warbot_settings.html" %}
+
+	{% with text=textt %}
+		{% include "warbot_text_output.html" %}
+	{% endwith %}
+
+{% endblock %}
