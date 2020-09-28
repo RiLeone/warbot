@@ -1,12 +1,9 @@
-
-
 <form action="#" method="post">
 	<p>Select the desired world:</p>
 
     <select name="world" method="GET" action="/">
-        <option value="{{worlds[0]}}" selected>{{worlds[0]}}</option>
-        {% for world in worlds[1:] %}
-            <option value="{{world}}">{{world}}</option>
+        {% for world in worlds %}
+            <option value="{{world}}" {% if world == selected %}selected{% endif %}>{{world}}</option>
         {% endfor %}
     </select>
 

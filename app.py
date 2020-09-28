@@ -39,6 +39,7 @@ def play():
 
     if request.method == "POST":
         world = request.form.get('world')
+        selected = world
         old_stdout = sys.stdout
         sys.stdout = output = StringIO()
         run_game(world)
@@ -50,6 +51,7 @@ def play():
         # https://stackoverflow.com/a/41694784
         text = text.split('\n')
 
-        return render_template('warbot_game.html', worlds=worlds, text=text)
+        return render_template('warbot_game.html', worlds=worlds, selected=selected, text=text)
     else:
-        return render_template('warbot_game.html', worlds=worlds)
+        selected = worlds[0]
+        return render_template('warbot_game.html', worlds=worlds, selected=selected)
