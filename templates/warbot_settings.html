@@ -1,5 +1,16 @@
+
+
 <form action="#" method="post">
-	<p>Name:</p>
-	<p><input type="World" name="world" /></p>
-	<p><input type="submit" value="submit"/></p>
+	<p>Select the desired world:</p>
+
+    <select name="world" method="GET" action="/">
+        <option value="{{worlds[0]}}" selected>{{worlds[0]}}</option>
+        {% for world in worlds[1:] %}
+            <option value="{{world}}">{{world}}</option>
+        {% endfor %}
+    </select>
+
+    <p><input type="submit" value="submit"/></p>
 </form>
+
+

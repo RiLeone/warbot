@@ -2,7 +2,10 @@
 {% block title %}Login Page{% endblock %}
 
 {% block content %}
-	{% include "warbot_settings.html" %}
+
+	{% with worlds=worlds %}
+		{% include "warbot_settings.html" %}
+	{% endwith %}
 
 	{% with text=text %}
 		{% include "warbot_text.html" %}

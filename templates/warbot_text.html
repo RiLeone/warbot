@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row">
         <div class="col-sm">
-            {{text}}
+            {% autoescape false %}
+                {{text}}
+            {% endautoescape %}
         </div>
     </div>
 </div>

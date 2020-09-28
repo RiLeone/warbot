@@ -16,19 +16,21 @@ import AuxiliaryTools
 import HistoricStatistician as hs
 
 
-def main():
-    """Run the full game."""
 
-    print(__doc__)
-    options = AuxiliaryTools.parse_args()
-
-    world_file = './worlds/Debugland/states.json'
-    wb = WarBot.WarBot(world_file)
-    wb.run(**options["WarBot.run"])
 
 
 app = Flask(__name__)
 
+
+def run_game(world):
+    """Run the full game."""
+
+    options = AuxiliaryTools.parse_args()
+    root='.'
+    dnames = WorldSelector.list_worlds(root)
+    world_file = WorldSelector.verify_choice(root, dnames, world)
+    wb = WarBot.WarBot(world_file)
+    wb.run(**options["WarBot.run"])
 
 @app.route("/")
 def home():
@@ -39,12 +41,19 @@ def home():
 
 @app.route("/play", methods=["POST", "GET"])
 def play():
+    worlds = WorldSelector.list_worlds(".")
+
     if request.method == "POST":
-        world = request.form["world"]
+        world = request.form.get('world')
         old_stdout = sys.stdout
         sys.stdout = mystdout = StringIO()
-        main()
+        run_game(world)
         sys.stdout = old_stdout
-        return render_template('warbot_game.html', text=mystdout.getvalue())
+        asd=mystdout.getvalue()
+        print(asd)
+
+        asd = asd.replace('\n', '<br>')
+
+        return render_template('warbot_game.html', worlds=worlds, text=asd)
     else:
-        return render_template('warbot_game.html')
+        return render_template('warbot_game.html', worlds=worlds)
