@@ -3,9 +3,6 @@ from flask import Flask, render_template, request
 from io import StringIO
 import sys
 
-### Install requirements.txt
-### Run it from warbot folder with 'flask run'
-### Look at the webpage http://127.0.0.1:5000/
 
 sys.path.append("src/")
 

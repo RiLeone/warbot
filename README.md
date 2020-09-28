@@ -87,3 +87,12 @@ exceptions (methods and functions for which a test either cannot be written or
 the employed module is not suitable) it is asked to write a test which gets
 skipped. The rationale behind this is like using `NotImplemented` as a
 placeholder instead of `pass`.
+
+## WarBot in your browser
+
+If you want, you can also play WarBot in your browser. The online WarBot is 
+powered by flask. In order to run it, first install the requirements listed in 
+requirements.txt. Then you can run the executable of flask in the warbot folder 
+using the command `flask run`. You can then open the link http://127.0.0.1:5000/. 
+Have fun!
+
