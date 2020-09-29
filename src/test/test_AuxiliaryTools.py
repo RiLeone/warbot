@@ -30,6 +30,13 @@ class test_AuxiliaryTools(ut.TestCase):
         NotImplemented
 
 
+    @ut.skip("Not truely functional")
+    def test_setup_matplotlib_options(self):
+        """Test setup_matplotlib_options() function"""
+
+        pass
+
+
     def test_parse_argvs(self):
         """Test parse_argvs() function"""
 

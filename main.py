@@ -9,6 +9,7 @@
 """
 
 import sys
+import pprint
 import matplotlib.pyplot as pltlib
 
 sys.path.append("src/")
@@ -23,7 +24,7 @@ import HistoricStatistician as hs
 def main():
     """Run the full game."""
 
-    pltlib.rc("figure", figsize = (16, 9))
+    AuxiliaryTools.setup_matplotlib_options(**AuxiliaryTools.DEFAULT_MATPLOTLIB_OPTIONS)
 
     print(__doc__)
     options = AuxiliaryTools.parse_args()
@@ -34,7 +35,9 @@ def main():
 
     statistician = hs.HistStat(wb.get_history())
     stat_res = statistician.run()
+    statistician.print_results()
 
+    print("\n*** End of simulation - Close figure to exit program. ***\n")
     pltlib.show()
 
 
