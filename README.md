@@ -166,3 +166,13 @@ The turn is over. C won the battle and thus is now in control of what formerly
 known as G. Who knows if the fierce Gers will revolt in the future? New
 neighbors have been devined for (all) the states. The game can continue - what
 will happen next?
+
+
+## WarBot in your browser
+
+If you want, you can also play WarBot in your browser. The online WarBot is 
+powered by flask. In order to run it, first install the requirements listed in 
+requirements.txt. Then you can run the executable of flask in the warbot folder 
+using the command `flask run`. You can then open the link http://127.0.0.1:5000/. 
+Have fun!
+

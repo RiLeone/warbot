@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+
+	{% with worlds=worlds, selected=selected %}
+		{% include "warbot_settings.html" %}
+	{% endwith %}
+
+	{% with text=text %}
+		{% include "warbot_text.html" %}
+	{% endwith %}
+
+{% endblock %}
