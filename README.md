@@ -1,8 +1,89 @@
 # WarBot
 
-A sort of autonomous, simulated game of Risiko in Python3.
+A sort of autonomous, simulated game of world-conquest in Python3.
+
+## How to Run Stuff and Add Things
+
+### Running a Game
+To play, navigate to the project root folder `<PRJ_ROOT>/` i.e. that folder on
+your machine where this repo is and then run `main.py`. It should be executable,
+so on Unix systems simply do
+```bash
+  ./main.py
+```
+Then follow the instructions appearing on screen. To run the game in verbose
+mode, use the `-v` option, i.e.
+```bash
+  ./main.py -v
+```
+
+### Required Folder Structure
+The game assumes a specific folder structure to be place for working. At the
+bare minimum, the following files at these locations should be present:
+```
+  <PRJ_ROOT>/
+    main.py
+    src/
+      AuxiliaryTools.py
+      WarBot.py
+      ...                         # And all other source modules
+      test/
+        test_AuxiliaryTools.py
+        test_WarBot.py
+        ...                       # A test file for each module.
+    worlds/
+      <World_I>/
+        states.json
+        ...                       # Other auxiliary files
+      <World_II>/
+        states.json
+        ...
+      ...                         # Any other number of worlds
+    x/
+      run_tests.sh
+```
+here `<World_I>` and `<World_II>` are placeholders for actual implemented
+worlds.
+
+
+### Running Tests
+The source is developed in an issue- and test-oriented way, so each
+functionality comes with a test. Test files have to be placed in the
+`<PRJ_ROOT>/src/test/` folder, the filename has to start with `test_`. To run
+all tests, call
+```bash
+  ./x/run_tests.sh
+```
+from `<PRJ_ROOT>/`.
+
+
+### Adding (Brave) New Worlds
+Any world needs to have its own folder in the `<PRJ_ROOT>/worlds/` folder. The
+world's folder name defines the world's name. Does this make sense? Good. In
+each world-subfolder, a JSON file called `states.json` is expected to exist.
+This JSON file needs to define the states of that world as follows:
+```json
+{
+  "states": {
+    "<state_name>": {
+      "pop": <int>,
+      "area": <float>,
+      "id": <int> unique,
+      "neighbors": <list[str]>,
+      "growth_rate": <float>
+    }
+  }
+}
+```
+The JSON file can contain also other items, but it does not have to. Check
+`<PRJ_ROOT>/worlds/Debugland/states.json` for a comprehensive and up-to-date
+example. This file is the bare minimum - in terms of structure - required for
+the game to work.
+
 
 ## Acronyms
+The following acronyms are used throughout the source and documentation.
+
 |Acronym | Meaning|
 |:-------|:-------|
 |TBI     | To be implemented |
@@ -10,9 +91,17 @@ A sort of autonomous, simulated game of Risiko in Python3.
 
 
 ## Contributing Guidelines
-
 Please review the guidelines reported in CONTRIBUTING before starting to work on
 this project.
+
+
+### Testing
+The code is tested using Python's built-in `unittest` module. Each method has to
+be tested before being accepted into the master branch - exceptions apply. For
+exceptions (methods and functions for which a test either cannot be written or
+the employed module is not suitable) it is asked to write a test which gets
+skipped. The rationale behind this is like using `NotImplemented` as a
+placeholder instead of `pass`.
 
 
 ## Game Description
@@ -78,15 +167,6 @@ known as G. Who knows if the fierce Gers will revolt in the future? New
 neighbors have been devined for (all) the states. The game can continue - what
 will happen next?
 
-
-## Testing
-
-The code is tested using Python's built-in `unittest` module. Each method has to
-be tested before being accepted into the master branch - exceptions apply. For
-exceptions (methods and functions for which a test either cannot be written or
-the employed module is not suitable) it is asked to write a test which gets
-skipped. The rationale behind this is like using `NotImplemented` as a
-placeholder instead of `pass`.
 
 ## WarBot in your browser
 

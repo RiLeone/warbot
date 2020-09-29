@@ -5,13 +5,15 @@
       "pop": 10000,
       "area": 2000,
       "id": 1,
-      "neighbors": ["B"]
+      "neighbors": ["B"],
+      "growth_rate": 0.01
     },
     "B": {
       "pop": 20000,
       "area": 1000,
       "id": 2,
-      "neighbors": ["A"]
+      "neighbors": ["A"],
+      "growth_rate": -0.01
     }
   }
 }
