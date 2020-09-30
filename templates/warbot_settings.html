@@ -1,0 +1,13 @@
+<form action="#" method="post">
+	Select the desired world:
+
+    <select name="world" method="GET" action="/">
+        {% for world in worlds %}
+            <option value="{{world}}" {% if world == selected %}selected{% endif %}>{{world}}</option>
+        {% endfor %}
+    </select>
+
+    <input type="submit" value="submit"/>
+</form>
+
+
