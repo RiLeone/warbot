@@ -63,7 +63,13 @@ selected_state = regions
 
 regions_array = np.array(regions)
 
-# for i in range(len(regions_array),2):
-#     for l in range(len(regions_array[i]))
-#         if -1 in regions_array[i][j]:
-#             regions_array.remove(regions_array[i])
+for i in range(len(regions_array),2):
+    for l in range(len(regions_array[i]))
+        if -1 in regions_array[i][j]:
+            regions_array.remove(regions_array[i])
+
+
+from scipy.spatial import Delaunay
+#coding with delaunay triangels
+tri= Delaunay(random_array)
+regions_d=tri.vertex_to_simplex
