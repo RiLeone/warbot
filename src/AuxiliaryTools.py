@@ -14,7 +14,7 @@ import logging
 
 
 DEFAULT_MAIN_OPTS = {
-    "WarBot.run": {"verbose": False}
+    "WarBot.run": {"verbose": True}
 }
 
 

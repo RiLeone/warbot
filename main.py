@@ -14,6 +14,7 @@ sys.path.append("src/")
 
 import WarBot
 import WorldSelector
+import ArmiesSelector
 import AuxiliaryTools
 import HistoricStatistician as hs
 
@@ -26,9 +27,9 @@ def main():
     options = AuxiliaryTools.parse_args()
 
     world_file = WorldSelector.select_world()
-    wb = WarBot.WarBot(world_file)
+    armies_file = ArmiesSelector.select_armies(world_file)
+    wb = WarBot.WarBot(world_file, armies_file)
     wb.run(**options["WarBot.run"])
-
 
 
 if __name__ == "__main__":

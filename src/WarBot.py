@@ -51,8 +51,10 @@ class WarBot:
 
     """
 
-    def __init__(self, data_file: str) -> "WarBot Object":
+    def __init__(self, data_file: str, armies_file: str) -> "WarBot Object":
         self._players = self.load_players(data_file)
+        self._armies = self.load_armies(armies_file)
+        self._players = self.merge_dictionary_to_players(self._armies)
         self._players_names = [pn.replace("_", " ").capitalize() for pn in self._players.keys()]
         self._history = [{"players": self._players_names.copy(),
                           "n_of_players": len(self._players_names)},]
@@ -72,6 +74,28 @@ class WarBot:
         with open(data_file, "r") as fp:
             return copy.deepcopy(json.load(fp)["states"])
 
+
+    def load_armies(self, data_file: str) -> dict:
+        """Load the players from the datafile.
+
+        Returns the initial states with their properties in a dictionary. It
+        loads the JSON file and only returns the "states" entry thereof.
+        """
+
+        with open(data_file, "r") as fp:
+            return copy.deepcopy(json.load(fp)["armies"])
+
+
+    def merge_dictionary_to_players(self, dictionary: dict) -> dict:
+        """Merging any dictionary with the _players structure
+
+        Returns the _players structure containing any item read from another dictionary. Can be used to add characteristics
+        (military and whatnot) to a state
+        """
+        for player in self._players:
+            for item in dictionary[player]:
+                self._players[player][item] = dictionary[player].get(item)
+        return self._players
 
     def compute_round(self):
         """Compute/simulate a single round of the game.
@@ -148,30 +172,40 @@ class WarBot:
 
         winners = []
         losers = []
+        method = "army"
+
+
         for pp in battle_pairs:
             strengths = self.compute_battle_strengths(
                 [self._players[p] for p in pp],
-                method = "poparea"
+                method = method
             )
 
             result = np.random.rand(1)
 
             if result > strengths[0]:
-                winner = pp[0]
-                loser = pp[1]
-
-            else:
                 winner = pp[1]
                 loser = pp[0]
 
-            pop_losses = [self.compute_fatalities(self._players[p]["pop"], rs, result) for p, rs in zip(pp, strengths)]
-            self.update_populations_after_battle(pp, pop_losses)
+            else:
+                winner = pp[0]
+                loser = pp[1]
+
+            if method == "poparea":
+                pop_losses = [self.compute_fatalities(self._players[p]["pop"], rs, result) for p, rs in zip(pp, strengths)]
+                self.update_populations_after_battle(pp, pop_losses)
+            elif method == "army":
+                pop_losses = [0, 0]
+                army_losses = [self.compute_fatalities(self._players[p]["inf"], rs, result) for p, rs in zip(pp, strengths)]
+                self.update_army_size_after_battle(pp, army_losses)
+
 
             losers.append(loser)
             winners.append(winner)
 
             logger.info("BATLLE INFO :: Battle between {:s} and {:s} was won by {:s}.".format(pp[0], pp[1], winner))
             logger.info("BATLLE INFO :: Fatalities: {:s}: {:d} \t {:s}: {:d}.".format(pp[0], pop_losses[0], pp[1], pop_losses[1]))
+            logger.info("BATLLE INFO :: Army Losses: {:s}: {:d} \t {:s}: {:d}.".format(pp[0], army_losses[0], pp[1], army_losses[1]))
 
         for w, l in zip(winners, losers):
             self.merge_players(w, l)
@@ -189,6 +223,14 @@ class WarBot:
         for pk, pl in zip(players_keys, pop_losses):
             self._players[pk]["pop"] -= pl
             self._players[pk]["pop"] = max([1, self._players[pk]["pop"]]) # avoid populations <= 1
+
+
+    def update_army_size_after_battle(self, players_keys: list, army_losses: list):
+        """Update the population values after the battle"""
+
+        for pk, pl in zip(players_keys, army_losses):
+            self._players[pk]["inf"] -= pl
+            self._players[pk]["inf"] = max([0, self._players[pk]["inf"]]) #army can't be smaller than 0
 
 
     def update_populations_of_non_battling_states(self, battling_states: list):
@@ -219,7 +261,7 @@ class WarBot:
         """Merge losers into winners for each battle."""
 
         for k in self._players[winner].keys():
-            if not k in ("id", "growth_rate"):
+            if not k in ("id", "growth_rate", "inf"):
                 self._players[winner][k] += self._players[loser][k]
 
         self._players[winner]["neighbors"] = list(set(self._players[winner]["neighbors"]))
@@ -267,9 +309,10 @@ class WarBot:
         tot_pop = 0
         print("Surviving regions are:")
         for p in self._players.keys():
-            print("\t{:s}: Population {:d}, Area {:d} km2, Neighbors: {}".format(
+            print("\t{:s}: Population {:d}, Army (infantry) {:d}, Area {:d} km2, Neighbors: {}".format(
                 p.capitalize(),
                 self._players[p]["pop"],
+                self._players[p]["inf"],
                 self._players[p]["area"],
                 self._players[p]["neighbors"]
                 )
@@ -288,7 +331,7 @@ class WarBot:
         provided, "poparea" is used. Default method is "poparea".
         """
 
-        VALID_METHODS = ("poparea", )
+        VALID_METHODS = ("poparea", "army")
 
         if method not in VALID_METHODS:
             method = VALID_METHODS[0]
@@ -297,6 +340,9 @@ class WarBot:
             AREA_WEIGHT = 1.
             POP_WEIGHT = 0.5
             strengths = [bp["area"] * AREA_WEIGHT + bp["pop"] * POP_WEIGHT for bp in battle_pair]
+
+        if method == VALID_METHODS[1]:
+            strengths = [bp["inf"] for bp in battle_pair]
 
         tot_s = np.sum(strengths)
         strengths = list(map(lambda x: x / tot_s, strengths))

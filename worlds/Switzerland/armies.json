@@ -1,0 +1,83 @@
+{
+  "source": "https://it.wikipedia.org/wiki/Cantoni_della_Svizzera",
+  "armies": {
+    "uri": {
+      "inf": 10000
+    },
+    "schwyz": {
+      "inf": 10000
+    },
+    "obwalden": {
+      "inf": 10000
+    },
+    "nidwalden": {
+      "inf": 10000
+    },
+    "luzern": {
+      "inf": 10000
+    },
+    "zuerich": {
+      "inf": 10000
+    },
+    "glarus": {
+      "inf": 10000
+    },
+    "zug": {
+      "inf": 10000
+    },
+    "bern": {
+      "inf": 10000
+    },
+    "fribourg": {
+      "inf": 10000
+    },
+    "solothurn": {
+      "inf": 10000
+    },
+    "basel_stadt": {
+      "inf": 10000
+    },
+    "basel_land": {
+      "inf": 10000
+    },
+    "schaffausen": {
+      "inf": 10000
+    },
+    "appenzell_ausserrhoden": {
+      "inf": 10000
+    },
+    "appenzell_innerrhoden": {
+      "inf": 10000
+    },
+    "sankt_gallen": {
+      "inf": 10000
+    },
+    "graubuenden": {
+      "inf": 10000
+    },
+    "aargau": {
+      "inf": 10000
+    },
+    "thurgau": {
+      "inf": 10000
+    },
+    "ticino": {
+      "inf": 10000
+    },
+    "vaud": {
+      "inf": 10000
+    },
+    "wallis": {
+      "inf": 10000
+    },
+    "neuchatel": {
+      "inf": 10000
+    },
+    "geneve": {
+      "inf": 10000
+    },
+    "jura": {
+      "inf": 10000
+    }
+  }
+}
