@@ -11,6 +11,7 @@ import json
 import pprint
 import logging
 import numpy as np
+import time
 import matplotlib.pyplot as pltlib
 
 import AuxiliaryTools
@@ -249,6 +250,7 @@ class WarBot:
             counter += 1
             print_command("HISTORY INFO :: Number of remaining states {:d}".format(len(list(self._players.keys()))))
             print_command("HISTORY INFO :: Round {:d} being computed...".format(counter))
+            time.sleep(0.01)
             self.compute_round()
             self._history.append(
                 {
