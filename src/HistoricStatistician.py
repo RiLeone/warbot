@@ -12,7 +12,7 @@ import numpy as np
 import AuxiliaryTools
 import matplotlib.pyplot as pltlib
 
-
+SEPARATOR = "\n" + "=" * 80 + "\n"
 
 class HistStat:
     """HistStat
@@ -43,15 +43,14 @@ class HistStat:
         """Neatly print the results"""
 
         keys_to_be_printed = ("battle_stats", "summary")
-        separator = "\n" + "=" * 80 + "\n"
 
-        print(separator)
+        print(SEPARATOR)
         for k2bp in keys_to_be_printed:
             print("\n{:s}".format(k2bp.replace("_", " ").title()))
             print("-" * len(k2bp))
             pprint.pprint(self._res[k2bp])
 
-        print(separator)
+        print(SEPARATOR)
 
 
     def plot_world_population(self) -> pltlib.figure:
@@ -63,14 +62,15 @@ class HistStat:
         growth = self._world_history["n_of_pop_increse"]
 
         fig = pltlib.figure()
-        pltlib.bar(xval[:-1], fats[1:], bottom = np.array(yval[:-1]) - np.array(fats[1:]), ec = "k", fc = "r")
-        pltlib.bar(xval[:-1], growth[1:], bottom = yval[:-1], ec = "k", fc = "g")
+        pltlib.bar(xval[:-1], fats[1:], bottom = np.array(yval[:-1]) - np.array(fats[1:]), ec = "k", fc = "r", label = "Fatalities")
+        pltlib.bar(xval[:-1], growth[1:], bottom = yval[:-1], ec = "k", fc = "g", label = "Newborns")
         pltlib.plot(xval, yval, "ks-", **self._line_plot_settings)
         pltlib.grid(True)
         pltlib.xlabel("Year")
         pltlib.xticks(ticks = xval, labels = ["{:d}".format(xv) for xv in xval])
         pltlib.ylabel("World Population [-]")
         pltlib.ylim((0, 1.1 * max(yval)))
+        pltlib.legend(loc = 1)
 
         fig.tight_layout()
 
