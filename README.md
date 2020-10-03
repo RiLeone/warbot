@@ -17,6 +17,14 @@ mode, use the `-v` option, i.e.
   ./main.py -v
 ```
 
+### WarBot in your browser
+If you want, you can also play WarBot in your browser. The online WarBot is 
+powered by flask. In order to run it, first install the requirements listed in 
+`requirements.txt`. Then you can run the executable of flask in the warbot folder 
+using the command `flask run`. You can then open the link http://127.0.0.1:5000/. 
+Have fun!
+
+
 ### Required Folder Structure
 The game assumes a specific folder structure to be place for working. At the
 bare minimum, the following files at these locations should be present:
@@ -105,7 +113,6 @@ placeholder instead of `pass`.
 
 
 ## Game Description
-
 The world was at peace. Before the beginning, no battles were occurring. States
 were secretly getting ready, growing and building infrastructure.
 Suddenly, on a nice sunny day, complete mayhem broke out. States started
@@ -115,7 +122,6 @@ since. This is, in a nutshell, what happens during a game.
 
 
 ### First Things First: Before the Beginning
-
 A peaceful but tense **world** exists at the beginning. This is a collection
 of **states**. A state has an **area**, a **population**, a **growth rate** (TBI),
 a **shape** (TBI), and **neighbors**. Neighbors are problematic. No state wants
@@ -125,7 +131,6 @@ play.
 
 
 ### Could Not Care Less About What is About to go Down: Time and Turns
-
 To spare the user from complete chaos there is but one thing: time. Time does
 not care about the states. It goes on, turn by turn. Battles can only occur
 during a **turn**. A turn is the elementary time unit in this bizarre world. At
@@ -138,7 +143,6 @@ each turn, at least one battle is guaranteed to occur.
 
 
 ### After the End: Last State Standing
-
 After a set of (max) turns or when a single overlord remains (and no insurgences
 are allowed (TBI)) the game ends in void. Like in the real world, it started from
 nothing and will (possibly) end in nothing. Here though you get something as you
@@ -147,13 +151,12 @@ about what happened.
 
 
 ### Example Turn Visualization
-
 The following images describe more than what thousands of words ever could, how
 a turn goes down.
 
 ![Initial condition](img/initial_condition.png)
 
-The world is (seamingly) at peace.
+The world is (seemingly) at peace.
 
 ![What happens under the hood](img/turn_illustrated.png)
 
@@ -164,15 +167,14 @@ generator... While the two fight, the others grow.
 
 The turn is over. C won the battle and thus is now in control of what formerly
 known as G. Who knows if the fierce Gers will revolt in the future? New
-neighbors have been devined for (all) the states. The game can continue - what
+neighbors have been defined for (all) the states. The game can continue - what
 will happen next?
 
 
-## WarBot in your browser
+## History Statistics and Visualization
+The history of any game is analyzed by the `HistoryStatistician` module. More is
+yet to come.
 
-If you want, you can also play WarBot in your browser. The online WarBot is 
-powered by flask. In order to run it, first install the requirements listed in 
-requirements.txt. Then you can run the executable of flask in the warbot folder 
-using the command `flask run`. You can then open the link http://127.0.0.1:5000/. 
-Have fun!
+![Example Historic World Populaiton Visualization](img/example_wph.png)
+Example history world population visualization.
 

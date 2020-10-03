@@ -11,10 +11,15 @@
 import sys
 import copy
 import logging
+import matplotlib.pyplot as pltlib
 
 
 DEFAULT_MAIN_OPTS = {
     "WarBot.run": {"verbose": False}
+}
+
+DEFAULT_MATPLOTLIB_OPTIONS = {
+    "figsize": (16, 9),
 }
 
 
@@ -47,6 +52,15 @@ def parse_args() -> dict:
                 options["WarBot.run"]["verbose"] = True
 
     return options
+
+
+
+def setup_matplotlib_options(**kwargs):
+    """Setup matplotlib options."""
+
+    if "figsize" in kwargs.keys():
+        pltlib.rc("figure", figsize = kwargs["figsize"])
+
 
 
 if __name__ == "__main__":
