@@ -20,6 +20,7 @@ import AuxiliaryTools
 
 logger = AuxiliaryTools.setup_logging(__name__, local_level = logging.INFO)
 YEAR = datetime.now().year
+MAX_PARALLEL_BATTLES = 1
 
 
 class WarBot:
@@ -76,17 +77,6 @@ class WarBot:
         self._losers = []
 
 
-    def load_players(self, data_file: str) -> dict:
-        """Load the players from the datafile.
-
-        Returns the initial states with their properties in a dictionary. It
-        loads the JSON file and only returns the "states" entry thereof.
-        """
-
-        with open(data_file, "r") as fp:
-            return copy.deepcopy(json.load(fp)["states"])
-
-
     def compute_round(self):
         """Compute/simulate a single round of the game.
 
@@ -117,7 +107,7 @@ class WarBot:
         available_players = list(self._players.keys())
         busy_players = []
 
-        for ii in [1,]: # range(20): # TODO parallel version still bugged (not reaching an end because of wrong neighborhood handling)
+        for ii in range(MAX_PARALLEL_BATTLES):
             if len(available_players) > 0:
                 idx = np.random.randint(0, len(available_players))
 
@@ -227,7 +217,11 @@ class WarBot:
         """Update the world after the battles are over in terms of neighborhoods."""
 
         for p in self._players.keys():
+            original_hood = self._players[p].get_neighbors()
             self._players[p].clean_neighborhood(losers)
+            for w, l in zip(winners, losers):
+                if l in original_hood and w not in self._players[p].get_neighbors():
+                    self._players[p].add_neighbor(w)
 
         # TODO: need to add 'winner' as neighbor of those states which had 'loser' as a neighbor
 

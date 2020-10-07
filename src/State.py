@@ -136,6 +136,13 @@ class State:
         return self._neighbors.copy()
 
 
+    def add_neighbor(self, new_neighbor: str):
+        """Add a neighbor"""
+
+        self._neighbors.append(new_neighbor)
+        self._neighbors = list(set(self._neighbors)) # enforce absence of duplicates
+
+
     def __str__(self):
         """Representation of self when calling print()"""
 
