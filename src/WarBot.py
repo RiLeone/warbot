@@ -223,8 +223,6 @@ class WarBot:
                 if l in original_hood and w not in self._players[p].get_neighbors():
                     self._players[p].add_neighbor(w)
 
-        # TODO: need to add 'winner' as neighbor of those states which had 'loser' as a neighbor
-
 
     def merge_players(self, winner: str, loser: str):
         """Merge losers into winners for each battle."""
