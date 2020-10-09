@@ -130,6 +130,12 @@ class State:
         return self._area
 
 
+    def get_history(self) -> dict:
+        """Get history of state"""
+
+        return copy.deepcopy(self._history)
+
+
     def get_neighbors(self) -> list:
         """Get state neighbors"""
 

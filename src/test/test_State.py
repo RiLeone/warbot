@@ -55,8 +55,8 @@ class test_LSFJF(ut.TestCase):
 
 class test_State(ut.TestCase):
     def setUp(self):
-        self._state_A = State.State(TEST_STATES_DICT["A"])
-        self._state_B = State.State(TEST_STATES_DICT["B"])
+        self._state_A = State.State(copy.deepcopy(TEST_STATES_DICT["A"]))
+        self._state_B = State.State(copy.deepcopy(TEST_STATES_DICT["B"]))
 
 
     def test_State_constructor(self):
@@ -71,59 +71,119 @@ class test_State(ut.TestCase):
 
     def test_update_history(self):
         """Test update_history() method."""
-        NotImplemented
+
+        er = 200
+        self._state_A._pop = er
+        self._state_A.update_history()
+
+        self.assertEqual(er, self._state_A.get_history()["pop"][-1])
 
 
     def test_grow(self):
         """Test grow() method."""
-        NotImplemented
+
+        er = TEST_STATES_DICT["A"]["pop"] + self._state_A.compute_population_growth_delta()
+        _ = self._state_A.grow()
+        self.assertEqual(er, self._state_A.get_history()["pop"][-1])
 
 
     def test_compute_population_growth_delta(self):
         """Test test_compute_population_growth_delta() method."""
-        NotImplemented
+
+        er = int(round(TEST_STATES_DICT["A"]["pop"] * TEST_STATES_DICT["A"]["growth_rate"]))
+
+        self.assertEqual(er, self._state_A.compute_population_growth_delta())
 
 
     def test_update_populations_after_battle(self):
         """Test update_population_after_battle() method."""
-        NotImplemented
+
+        pop_loss = 100
+        er = TEST_STATES_DICT["A"]["pop"] - pop_loss
+        self._state_A.update_population_after_battle(100)
+
+        self.assertEqual(er, self._state_A.get_history()["pop"][-1])
 
 
     def test_compute_battle_strength(self):
         """Test compute_battle_strength() method."""
-        NotImplemented
+
+        AW, PW = 1., 0.5
+        er = TEST_STATES_DICT["A"]["area"] * AW + TEST_STATES_DICT["A"]["pop"] * PW
+
+        self.assertEqual(er, self._state_A.compute_battle_strength("poparea"))
 
 
     def test_merge_with(self):
         """Test merge_with() method."""
-        NotImplemented
+
+        new_state = copy.deepcopy(TEST_STATES_DICT["A"])
+        er = State.State(new_state)
+        er._pop += TEST_STATES_DICT["B"]["pop"]
+        er._area += TEST_STATES_DICT["B"]["area"]
+        er._neighbors = []
+
+        self._state_A.merge_with(self._state_B)
+
+        attribute_keys = ("_pop", "_area", "_neighbors", "_growth_rate", "_name", "_id")
+        for ak in attribute_keys:
+            self.assertEqual(getattr(er, ak), getattr(self._state_A, ak))
 
 
     def test_clean_neighborhood(self):
         """Test clean_neighborhood() method."""
-        NotImplemented
+
+        invalid_neighbors = ["A",]
+        er = []
+        state = State.State(copy.deepcopy(TEST_STATES_DICT["B"]))
+        state.clean_neighborhood(invalid_neighbors)
+
+        self.assertEqual(er, state.get_neighbors())
 
 
     def test_get_name(self):
         """Test get_name() method."""
-        NotImplemented
+
+        er = TEST_STATES_DICT["A"]["name"]
+        self.assertEqual(er, self._state_A.get_name())
 
 
     def test_get_population(self):
         """Test get_population() method."""
-        NotImplemented
+
+        er = TEST_STATES_DICT["B"]["pop"]
+        self.assertEqual(er, self._state_B.get_population())
 
 
     def test_get_area(self):
         """Test get_area() method."""
-        NotImplemented
+
+        er = TEST_STATES_DICT["B"]["area"]
+        self.assertEqual(er, self._state_B.get_area())
+
+
+    def test_get_history(self):
+        """Test get_history() method."""
+
+        er = {"pop": [TEST_STATES_DICT["A"]["pop"]]}
+        self.assertEqual(er, self._state_A.get_history())
 
 
     def test_get_neighbors(self):
         """Test get_neighbors() method."""
-        NotImplemented
+
+        er = TEST_STATES_DICT["A"]["neighbors"]
+        self.assertEqual(er, self._state_A.get_neighbors())
 
 
     def test_add_neighbor(self):
         """Test add_neighbor() method."""
-        NotImplemented
+
+        new_neighbor = "C"
+        er = copy.deepcopy(TEST_STATES_DICT["A"]["neighbors"])
+        er.append(new_neighbor)
+        er = list(set(er))
+
+        state = State.State(copy.deepcopy(TEST_STATES_DICT["A"]))
+        state.add_neighbor(new_neighbor)
+        self.assertEqual(er, state.get_neighbors())
