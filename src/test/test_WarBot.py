@@ -15,6 +15,7 @@ import UnittestExtensions as ute
 
 sys.path.append("../")
 
+import State
 import WarBot
 
 np.random.seed(0) # Needed in order to get "predictable" results.
@@ -26,6 +27,7 @@ TEST_PLAYERS = {
         "id": 1,
         "neighbors": ["B"],
         "growth_rate": 0.01,
+        "name": "A"
     },
     "B": {
         "pop": 20000,
@@ -33,6 +35,7 @@ TEST_PLAYERS = {
         "id": 2,
         "neighbors": ["A"],
         "growth_rate": -0.01,
+        "name": "B"
     }
 }
 
@@ -131,15 +134,35 @@ class test_WarBot(ut.TestCase):
     def test_compute_battle_strengths(self):
         """Test compute_battle_strengths() staticmethod"""
 
-        # TODO: implement suitable test-cases
-        NotImplemented
+        subtests = []
+        battle_pair_keys = ["A", "B"]
+        battle_pair = [self._wb._players[bpk] for bpk in battle_pair_keys]
+
+        subtests.append({
+            "arg": battle_pair,
+            "kwarg": {"method": "poparea"},
+            "er": [7. / 18, 11. / 18],
+            "msg": "Testing 'poparea' method."
+        })
+
+        for ii, sbt in enumerate(subtests):
+            with self.subTest(i = ii, msg = sbt["msg"]):
+                cr = self._wb.compute_battle_strengths(sbt["arg"], **sbt["kwarg"])
+                self.assertAlmostEqual(sbt["er"], cr, places = 4)
+                self.assertAlmostEqual(sum(cr), 1., places = 4)
 
 
     def test_update_populations_after_battle(self):
         """Test post-battle population update"""
 
-        # TODO: implement suitable test-cases
-        NotImplemented
+        pks = ["A", ]
+        pls = [100, ]
+        er = self._wb._players[pks[0]].get_population() - pls[0]
+
+        self._wb.update_populations_after_battle(pks, pls)
+
+        self.assertEqual(er, self._wb._players[pks[0]].get_population())
+
 
 
     def test_compute_fatalities(self):
@@ -159,5 +182,11 @@ class test_WarBot(ut.TestCase):
     def test_update_populations_of_non_battling_states(self):
         """Test update_populations_of_non_battling_states()"""
 
-        # TODO: implement suitable test-cases
-        NotImplemented
+        battling_states = ["A", ]
+        self._wb.update_populations_of_non_battling_states(battling_states)
+        cr = self._wb._players["B"].get_population()
+        state = State.State(TEST_PLAYERS["B"])
+        state.grow()
+        er = state.get_population()
+
+        self.assertEqual(er, cr)
