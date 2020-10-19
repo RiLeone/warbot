@@ -12,7 +12,10 @@ Created on Mon Sep 28 10:40:00 2020
 import numpy as np
 import matplotlib.pyplot as pltlib
 import random
+import pygame
 from scipy.spatial import Voronoi, voronoi_plot_2d
+
+
 
 random.seed(23)
 X_range = 100;
