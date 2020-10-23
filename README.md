@@ -18,10 +18,10 @@ mode, use the `-v` option, i.e.
 ```
 
 ### WarBot in your browser
-If you want, you can also play WarBot in your browser. The online WarBot is 
-powered by flask. In order to run it, first install the requirements listed in 
-`requirements.txt`. Then you can run the executable of flask in the warbot folder 
-using the command `flask run`. You can then open the link http://127.0.0.1:5000/. 
+If you want, you can also play WarBot in your browser. The online WarBot is
+powered by flask. In order to run it, first install the requirements listed in
+`requirements.txt`. Then you can run the executable of flask in the WarBot folder
+using the command `flask run`. You can then open the link http://127.0.0.1:5000/.
 Have fun!
 
 
@@ -96,6 +96,8 @@ The following acronyms are used throughout the source and documentation.
 |:-------|:-------|
 |TBI     | To be implemented |
 |WIP     | Work in progress |
+|`cr`    | Computed result |
+|`er`    | Expected result |
 
 
 ## Contributing Guidelines
@@ -177,4 +179,3 @@ yet to come.
 
 ![Example Historic World Populaiton Visualization](img/example_wph.png)
 Example history world population visualization.
-
